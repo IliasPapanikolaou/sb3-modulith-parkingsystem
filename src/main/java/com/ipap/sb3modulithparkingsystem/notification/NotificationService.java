@@ -3,7 +3,7 @@ package com.ipap.sb3modulithparkingsystem.notification;
 import com.ipap.sb3modulithparkingsystem.event.VehicleEnteredEvent;
 import com.ipap.sb3modulithparkingsystem.event.VehicleExitedEvent;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.event.EventListener;
+import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -14,7 +14,12 @@ public class NotificationService {
     // For example, it could send an email or SMS notification
     // when a vehicle enters or exits the parking system.
 
-    @EventListener
+    /*
+    Use of @ApplicationModuleListener instead of @EventListener.
+    Use of @ApplicationModuleListener is both @Asynchronous and @Transactional and part of modulith
+    module 'allocation' to handle slot allocation events in a decoupled manner.
+    */
+    @ApplicationModuleListener
     public void notifyOnVehicleEntry(VehicleEnteredEvent event) {
         // Logic to send notification (e.g., email, SMS)
         // For now, we will just log the message
@@ -22,7 +27,7 @@ public class NotificationService {
                 event.vehicleNumber(), event.entryTime());
     }
 
-    @EventListener
+    @ApplicationModuleListener
     public void notifyOnVehicleExit(VehicleExitedEvent event) {
         // Logic to send notification for vehicle exit
         // For now, we will just log the message

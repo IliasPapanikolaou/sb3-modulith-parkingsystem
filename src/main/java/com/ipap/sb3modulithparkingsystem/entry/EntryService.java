@@ -1,6 +1,7 @@
 package com.ipap.sb3modulithparkingsystem.entry;
 
 import com.ipap.sb3modulithparkingsystem.event.VehicleEnteredEvent;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -22,6 +23,7 @@ public class EntryService {
 
     // Send a notification to the user with entry details
 
+    @Transactional
     public void vehicleEntry(String vehicleNumber) {
         log.info("Vehicle entry initiated for vehicle number: {}", vehicleNumber);
 

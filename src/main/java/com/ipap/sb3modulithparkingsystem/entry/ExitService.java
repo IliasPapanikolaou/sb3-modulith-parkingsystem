@@ -2,6 +2,7 @@ package com.ipap.sb3modulithparkingsystem.entry;
 
 import com.ipap.sb3modulithparkingsystem.event.VehicleEnteredEvent;
 import com.ipap.sb3modulithparkingsystem.event.VehicleExitedEvent;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -19,6 +20,7 @@ public class ExitService {
 
     // Save vehicle exit details to DB
 
+    @Transactional
     public void vehicleExit(String vehicleNumber) {
         // Fetch the entry details from the repository
         ParkingEntry parkingEntry = parkingEntryRepository

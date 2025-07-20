@@ -3,7 +3,7 @@ package com.ipap.sb3modulithparkingsystem.billing;
 import com.ipap.sb3modulithparkingsystem.event.VehicleExitedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.event.EventListener;
+import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -16,7 +16,12 @@ public class BillingService {
 
     private final BillingRepository billingRepository;
 
-    @EventListener
+    /*
+    Use of @ApplicationModuleListener instead of @EventListener.
+    Use of @ApplicationModuleListener is both @Asynchronous and @Transactional and part of modulith
+    module 'allocation' to handle slot allocation events in a decoupled manner.
+    */
+    @ApplicationModuleListener
     public void handleVehicleExit(VehicleExitedEvent vehicleExitedEvent) {
         // Create a new billing record
         BillingRecord billingRecord = new BillingRecord();

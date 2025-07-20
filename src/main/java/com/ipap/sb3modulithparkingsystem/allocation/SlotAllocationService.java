@@ -4,7 +4,7 @@ import com.ipap.sb3modulithparkingsystem.event.VehicleEnteredEvent;
 import com.ipap.sb3modulithparkingsystem.event.VehicleExitedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.event.EventListener;
+import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,7 +16,12 @@ public class SlotAllocationService {
 
     private final SlotRepository slotRepository;
 
-    @EventListener
+    /*
+    Use of @ApplicationModuleListener instead of @EventListener.
+    Use of @ApplicationModuleListener is both @Asynchronous and @Transactional and part of modulith
+    module 'allocation' to handle slot allocation events in a decoupled manner.
+    */
+    @ApplicationModuleListener
     public void handleVehicleEntry(VehicleEnteredEvent vehicleEnteredEvent) {
         // Logic to allocate a slot for the vehicle
         // This could involve checking available slots and updating the slot status
@@ -29,7 +34,7 @@ public class SlotAllocationService {
         log.info("Allocated slot {} for vehicle {}", slot.getSlotCode(), vehicleEnteredEvent.vehicleNumber());
     }
 
-    @EventListener
+    @ApplicationModuleListener
     public void handleVehicleExit(VehicleExitedEvent vehicleExitedEvent) {
         // Logic to free up the slot when a vehicle exits
         // This could involve finding the slot occupied by the vehicle and marking it as available
