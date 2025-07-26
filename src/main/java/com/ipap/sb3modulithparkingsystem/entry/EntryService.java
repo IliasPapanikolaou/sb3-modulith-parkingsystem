@@ -1,7 +1,6 @@
 package com.ipap.sb3modulithparkingsystem.entry;
 
 import com.ipap.sb3modulithparkingsystem.event.VehicleEnteredEvent;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
