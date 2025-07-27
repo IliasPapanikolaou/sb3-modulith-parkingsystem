@@ -44,9 +44,14 @@ public class SlotAllocationService {
             slot.setAvailable(true);
             slot.setVehicleNumber(null); // Clear the vehicle number
             slotRepository.save(slot);
-            log.info("Freed up slot {} for vehicle {}", slot.getSlotCode(), vehicleExitedEvent.vehicleNumber());
+            log.info("🅿️ Freed up slot {} for vehicle {}", slot.getSlotCode(), vehicleExitedEvent.vehicleNumber());
         } else {
-            log.warn("No slot found for vehicle {}", vehicleExitedEvent.vehicleNumber());
+            log.warn("🚫 No slot found for vehicle {}", vehicleExitedEvent.vehicleNumber());
         }
+    }
+
+    public Slot getNextAvailableSlot() {
+        return slotRepository.findFirstByAvailableTrue()
+                .orElseThrow(() -> new RuntimeException("🚫 No available parking slots found"));
     }
 }
